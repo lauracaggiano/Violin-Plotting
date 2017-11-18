@@ -1,25 +1,21 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 Created on Thu Nov 16 17:07:37 2017
 
 @author: lauracaggiano
+@author: fluviolobo
 """
 
+# Import libraries and modules
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 
-"""
-Load data sheets
 
-"""
+# Loading data
 x1 = pd.ExcelFile('HistologyDataPythonNorm.xlsx')
-"""x2 = pd.ExcelFile('HistologyDataPythonTot.xlxs')"""
 df1 = x1.parse('Sheet1')
-df2 = x1.parse('Sheet2')
 
 Week1AvgNP = df1.loc[(df1['Patch']=='N') & (df1['Week'] == 1)]
 Week1AvgP = df1.loc[(df1['Patch']=='Y') & (df1['Week'] == 1)]
@@ -31,8 +27,13 @@ Week3AvgNP = df1.loc[(df1['Patch']=='N') & (df1['Week'] == 3)]
 Week3AvgP = df1.loc[(df1['Patch']=='Y') & (df1['Week'] == 3)]
 
 """
-These are the histograms that I want to make up the violin plots
+Histograms
+
+- SNS also has some distribution plots that you may want to look at.
+  These helped me understand what was going on
 """
+
+
 
 #plt.plot(Week1AvgNP['Angle'], Week1AvgNP['Norm Coll'])
 #plt.figure()
@@ -56,10 +57,6 @@ plt.figure()
 sns.boxplot(x="Week", y="NormColl", hue="Patch", data=df1, palette="PRGn")
 sns.despine(offset=10, trim=True)
 
-#plt.figure()
-xd = df1.as_matrix(columns=1)
-sns.displot(xd)
-#sns.despine(offset=10, trim=True)
 
 """ 
 This is my attempt at a violin plot
@@ -68,5 +65,7 @@ The x axis should be weeks, the y axis should be angle
 The magnitude of the histogram should correspond to Norm Coll
 """
 
-#plt.figure()
-#ax = sns.violinplot(x = df1["Week"], y = df1['NormColl'], hue = "Patch", data = df1, palette = "muted", scale="count")
+plt.figure()
+ax = sns.violinplot(x = df1["Week"], y = df1['NormColl'], hue = "Patch", data = df1, palette = "muted", scale="count")
+plt.figure()
+ax = sns.violinplot(x = df1["Angle"], y = df1['NormColl'], hue = "Patch", data = df1, palette = "muted", scale="count")
